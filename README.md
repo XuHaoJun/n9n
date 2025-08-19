@@ -2,48 +2,42 @@
 
 ## 簡介
 
-n9n 是一個 n8n 的替代方案，專為開發者設計的工作流自動化平台。
+n9n 是一款專為開發者從零開始打造的次世代工作流自動化平台。我們摒棄了傳統基於 JSON 的笨重配置，將工作流視為可測試、可版本化且高度可維護的一流軟體資產。
 
 ### 主要特色
 
-- **三種工作模式**：支援 **No Code 視覺化編輯**、**Code 程式碼開發** 以及 **AI 生成程式碼**，滿足不同使用者需求
-- **程式碼優先**：使用程式碼取代傳統的 JSON 配置，提供更強大的靈活性和可維護性
-- **函數即節點**：每個工作流節點都是一個 JavaScript/TypeScript 函數，易於理解和除錯
-- **ECS 架構**：基於實體組件系統 (Entity Component System) 設計，提供高效能和可擴展性
-- **AI 程式碼生成**：透過 AI 助手自動生成工作流程式碼，加速開發流程
+- 工作流即程式碼 (Workflow as Code)：您的自動化流程就是 TypeScript/JavaScript 程式碼。享受完整的 Git 版本控制、單元測試、程式碼重用以及您熟悉的所有開發工具鏈帶來的強大能力。
 
-透過 n9n，您可以選擇最適合的方式建構自動化工作流：
-- 🎨 **No Code**：使用視覺化介面拖拉建立工作流
-- 💻 **Code**：用熟悉的程式語言精確控制每個細節  
-- 🤖 **AI Generated**：讓 AI 助手協助生成和優化程式碼
+- 三位一體的開發體驗 (Unified Development Experience)：從 No-Code 視覺化拖曳、AI 輔助生成 到 Pro-Code 的精準控制，n9n 在三種模式間無縫轉換。無論是快速原型設計還是打造企業級的複雜流程，您都能找到最高效的路徑。
 
----
+- 響應式函數節點 (Reactive Function Nodes)：每個節點都是一個獨立、響應式的函數。這種清晰的抽象化不僅讓除錯變得直觀，更讓您能以函數式編程的思維，優雅地處理複雜的非同步數據流。
+
+- 高效能 ECS 架構 (High-Performance ECS Architecture)：底層採用實體組件系統 (Entity Component System)，將工作流的狀態與邏輯解耦。這不僅帶來了卓越的執行效能與水平擴展能力，也為未來的視覺化編輯與即時監控奠定了堅實基礎。
+
+n9n 不僅僅是一個工具，它是一種全新的理念：將嚴謹的軟體工程實踐注入到自動化領域。我們賦予開發者前所未有的自由度與控制力，讓您能建構出真正穩定、可擴展且經得起時間考驗的自動化系統。
 
 ## Introduction
 
-n9n is a powerful workflow automation platform that serves as an advanced alternative to n8n, designed specifically for developers who need flexibility and control.
+n9n is a next-generation workflow automation platform built from the ground up for developers. We've abandoned the cumbersome JSON-based configurations of traditional tools, instead treating workflows as first-class software assets that are testable, versionable, and highly maintainable.
 
 ### Key Features
 
-- **Three Working Modes**: Supports **No Code visual editing**, **Code development**, and **AI-generated code** to meet different user needs
-- **Code-First Approach**: Replace traditional JSON configurations with actual code for enhanced flexibility and maintainability
-- **Function as Node**: Each workflow node is a JavaScript/TypeScript function, making it easy to understand and debug
-- **ECS Architecture**: Built on Entity Component System design for high performance and scalability
-- **AI Code Generation**: Leverage AI assistants to automatically generate and optimize workflow code
+- **Workflow as Code**: Your automation processes are TypeScript/JavaScript code. Enjoy the full power of Git version control, unit testing, code reuse, and all the development toolchain you're familiar with.
 
-Choose the approach that fits your workflow:
-- 🎨 **No Code**: Visual drag-and-drop interface for rapid prototyping
-- 💻 **Code**: Full programmatic control with familiar programming languages
-- 🤖 **AI Generated**: AI-assisted code generation and optimization
+- **Unified Development Experience**: Seamlessly transition between No-Code visual drag-and-drop, AI-assisted generation, and Pro-Code precise control. Whether you're rapid prototyping or building enterprise-grade complex processes, you'll find the most efficient path.
 
-The platform seamlessly converts between code and visual representations, giving you the best of both worlds.
+- **Reactive Function Nodes**: Each node is an independent, reactive function. This clean abstraction not only makes debugging intuitive but also enables you to handle complex asynchronous data flows elegantly with functional programming principles.
+
+- **High-Performance ECS Architecture**: Built on Entity Component System foundation, decoupling workflow state from logic. This delivers exceptional execution performance and horizontal scaling capabilities, while establishing a solid foundation for future visual editing and real-time monitoring.
+
+n9n is more than just a tool—it's a new paradigm: injecting rigorous software engineering practices into the automation domain. We empower developers with unprecedented freedom and control, enabling you to build truly stable, scalable, and time-tested automation systems.
 
 ## 📚 Design Documentation
 
 For detailed technical design and architecture:
 
 - **[Code <-> UI Relationship Design](./docs/CODE_UI_RELATIONSHIP.md)** - Complete architecture for bidirectional code/visual synchronization
-- **[UI Component Examples](./docs/UI_COMPONENT_EXAMPLES.md)** - Practical UI component implementations for different editing modes  
+- **[UI Component Examples](./docs/UI_COMPONENT_EXAMPLES.md)** - Practical UI component implementations for different editing modes
 - **[Implementation Example](./docs/IMPLEMENTATION_EXAMPLE.md)** - End-to-end example showing visual to code workflow
 
 ## Reactive Slot Connections - Advanced Workflow Design
@@ -55,8 +49,8 @@ For detailed technical design and architecture:
 @NodeInfo({ uuid: "webhook-reactive", displayName: "Reactive Webhook" })
 @Position({ x: 50, y: 100 })
 @OutputSlots({
-  data: { 
-    type: 'stream', 
+  data: {
+    type: 'stream',
     reactive: true,
     displayName: 'Request Stream',
     color: '#2196F3',
@@ -67,7 +61,7 @@ For detailed technical design and architecture:
 function reactiveWebhook(@OutputSlots() outputs, @SelfEntity() self) {
   // Create reactive stream from webhook events
   const requestStream = createWebhookStream(self.config.path);
-  
+
   // Emit each incoming request
   requestStream.subscribe(request => {
     outputs.data.emit({
@@ -77,8 +71,8 @@ function reactiveWebhook(@OutputSlots() outputs, @SelfEntity() self) {
       id: generateId()
     });
   });
-  
-  return { 
+
+  return {
     dispose: () => requestStream.unsubscribe()
   };
 }
@@ -87,8 +81,8 @@ function reactiveWebhook(@OutputSlots() outputs, @SelfEntity() self) {
 @NodeInfo({ uuid: "processor-reactive", displayName: "Stream Processor" })
 @Position({ x: 250, y: 100 })
 @InputSlots({
-  stream: { 
-    type: 'stream', 
+  stream: {
+    type: 'stream',
     reactive: true,
     displayName: 'Input Stream',
     color: '#2196F3',
@@ -96,8 +90,8 @@ function reactiveWebhook(@OutputSlots() outputs, @SelfEntity() self) {
     position: 'left',
     required: true
   },
-  config: { 
-    type: 'object', 
+  config: {
+    type: 'object',
     reactive: false,
     displayName: 'Configuration',
     color: '#FF9800',
@@ -107,24 +101,24 @@ function reactiveWebhook(@OutputSlots() outputs, @SelfEntity() self) {
   }
 })
 @OutputSlots({
-  processed: { 
-    type: 'stream', 
+  processed: {
+    type: 'stream',
     reactive: true,
     displayName: 'Processed Stream',
     color: '#4CAF50',
     icon: 'check-circle',
     position: 'right'
   },
-  errors: { 
-    type: 'stream', 
+  errors: {
+    type: 'stream',
     reactive: true,
-    displayName: 'Error Stream', 
+    displayName: 'Error Stream',
     color: '#F44336',
     icon: 'error',
     position: 'bottom'
   },
-  stats: { 
-    type: 'object', 
+  stats: {
+    type: 'object',
     reactive: true,
     throttle: 1000, // Emit max once per second
     displayName: 'Statistics',
@@ -136,7 +130,7 @@ function reactiveWebhook(@OutputSlots() outputs, @SelfEntity() self) {
 function streamProcessor(@InputSlots() inputs, @OutputSlots() outputs) {
   let processedCount = 0;
   let errorCount = 0;
-  
+
   // React to streaming data with backpressure
   inputs.stream
     .buffer(inputs.config.batchSize)
@@ -150,18 +144,18 @@ function streamProcessor(@InputSlots() inputs, @OutputSlots() outputs) {
             processedAt: Date.now(),
             batchId: generateId()
           }));
-          
+
           // Emit processed batch
           outputs.processed.emit(processed);
           processedCount += processed.length;
-          
+
           // Emit stats (throttled)
           outputs.stats.emit({
             processed: processedCount,
             errors: errorCount,
             rate: processedCount / (Date.now() - startTime) * 1000
           });
-          
+
         } catch (error) {
           outputs.errors.emit({
             error: error.message,
@@ -185,8 +179,8 @@ function streamProcessor(@InputSlots() inputs, @OutputSlots() outputs) {
 @NodeInfo({ uuid: "email-reactive", displayName: "Reactive Email Sender" })
 @Position({ x: 450, y: 100 })
 @InputSlots({
-  messages: { 
-    type: 'stream', 
+  messages: {
+    type: 'stream',
     reactive: true,
     displayName: 'Message Stream',
     color: '#4CAF50',
@@ -194,8 +188,8 @@ function streamProcessor(@InputSlots() inputs, @OutputSlots() outputs) {
     position: 'left',
     required: true
   },
-  config: { 
-    type: 'object', 
+  config: {
+    type: 'object',
     reactive: false,
     displayName: 'Email Config',
     color: '#FF9800',
@@ -205,19 +199,19 @@ function streamProcessor(@InputSlots() inputs, @OutputSlots() outputs) {
   }
 })
 @OutputSlots({
-  sent: { 
-    type: 'stream', 
+  sent: {
+    type: 'stream',
     reactive: true,
     displayName: 'Sent Confirmations',
     color: '#4CAF50',
     icon: 'check',
     position: 'right'
   },
-  failed: { 
-    type: 'stream', 
+  failed: {
+    type: 'stream',
     reactive: true,
     displayName: 'Failed Sends',
-    color: '#F44336', 
+    color: '#F44336',
     icon: 'error',
     position: 'bottom'
   }
@@ -236,14 +230,14 @@ function reactiveEmailSender(@InputSlots() inputs, @OutputSlots() outputs) {
             body: message.body,
             template: message.template
           });
-          
+
           outputs.sent.emit({
             messageId: result.messageId,
             originalData: message,
             sentAt: Date.now(),
             provider: result.provider
           });
-          
+
         } catch (error) {
           outputs.failed.emit({
             error: error.message,
@@ -268,7 +262,7 @@ function reactiveEmailSender(@InputSlots() inputs, @OutputSlots() outputs) {
 
 ```javascript
 class ReactiveEmailWorkflow extends WorkflowBase {
-  // will directly run in frontend and backend, 
+  // will directly run in frontend and backend,
   // frontend will get graph(nodes/edges) for render no code editor!
   // backend will exec it!
   public build() {
@@ -276,39 +270,39 @@ class ReactiveEmailWorkflow extends WorkflowBase {
     const webhook = this.addNode(reactiveWebhook, {
       config: { path: '/api/contact', method: 'POST' }
     });
-    
+
     const validator = this.addNode(dataValidator, {
-      config: { 
+      config: {
         schema: ContactFormSchema,
-        strict: true 
+        strict: true
       }
     });
-    
+
     const processor = this.addNode(streamProcessor, {
-      config: { 
+      config: {
         batchSize: 5,
-        timeout: 3000 
+        timeout: 3000
       }
     });
-    
+
     const emailSender = this.addNode(reactiveEmailSender, {
-      config: { 
+      config: {
         rateLimit: 2, // 2 emails per second
-        retries: 3 
+        retries: 3
       }
     });
-    
+
     const logger = this.addNode(streamLogger, {
-      config: { 
+      config: {
         level: 'info',
-        format: 'json' 
+        format: 'json'
       }
     });
-    
+
     const metrics = this.addNode(metricsCollector, {
-      config: { 
+      config: {
         interval: 5000,
-        retention: '1h' 
+        retention: '1h'
       }
     });
 
@@ -320,17 +314,17 @@ class ReactiveEmailWorkflow extends WorkflowBase {
         received_at: Date.now(),
         source: 'webhook'
       }),
-      
+
       // Filter invalid requests
       filter: (data) => data.body && data.body.email,
-      
+
       // Backpressure handling
       backpressure: {
         strategy: 'buffer',
         bufferSize: 1000,
         overflow: 'drop-oldest'
       },
-      
+
       // Error handling
       onError: (error, data) => {
         logger.slots.errors.emit({
@@ -349,7 +343,7 @@ class ReactiveEmailWorkflow extends WorkflowBase {
         priority: calculatePriority(data),
         template: selectTemplate(data)
       }),
-      
+
       // Circuit breaker pattern
       circuitBreaker: {
         errorThreshold: 10,
@@ -360,7 +354,7 @@ class ReactiveEmailWorkflow extends WorkflowBase {
 
     // Connect processor to email sender
     this.connectReactive(processor.slots.processed, emailSender.slots.messages, {
-      // Flatten batches to individual messages  
+      // Flatten batches to individual messages
       transform: (batch) => batch.flatMap(item => ({
         email: item.body.email,
         subject: `Welcome ${item.body.name}`,
@@ -368,7 +362,7 @@ class ReactiveEmailWorkflow extends WorkflowBase {
         template: item.template,
         priority: item.priority
       })),
-      
+
       // Rate limiting at connection level
       rateLimit: {
         requests: 10,
@@ -395,7 +389,7 @@ class ReactiveEmailWorkflow extends WorkflowBase {
 
     // Connect stats streams
     this.connectReactive(processor.slots.stats, metrics.slots.stats);
-    
+
     // Multi-stream aggregation for dashboards
     this.aggregateStreams([
       processor.slots.stats,
@@ -412,21 +406,21 @@ class ReactiveEmailWorkflow extends WorkflowBase {
       })
     });
   }
-  
+
   public async start() {
     // Initialize all reactive streams
     await this.initializeNodes();
-    
+
     // Start monitoring
     this.startHealthCheck();
-    
+
     console.log('Reactive workflow started');
   }
-  
+
   public async stop() {
     // Gracefully close all streams
     await this.disposeNodes();
-    
+
     console.log('Reactive workflow stopped');
   }
 }
@@ -442,21 +436,21 @@ class FanOutWorkflow {
     const processorA = this.addNode(analyticsProcessor);
     const processorB = this.addNode(emailProcessor);
     const processorC = this.addNode(webhookProcessor);
-    
+
     // Fan-out with different filters
     this.fanOut(source.slots.data, [
-      { 
-        target: processorA.slots.input, 
+      {
+        target: processorA.slots.input,
         filter: (data) => data.type === 'analytics',
         transform: (data) => ({ ...data, processor: 'analytics' })
       },
-      { 
-        target: processorB.slots.input, 
+      {
+        target: processorB.slots.input,
         filter: (data) => data.type === 'email',
         transform: (data) => ({ ...data, processor: 'email' })
       },
-      { 
-        target: processorC.slots.input, 
+      {
+        target: processorC.slots.input,
         filter: (data) => data.type === 'webhook',
         transform: (data) => ({ ...data, processor: 'webhook' })
       }
@@ -471,23 +465,23 @@ class FanInWorkflow {
     const sourceB = this.addNode(queueSource);
     const sourceC = this.addNode(fileSource);
     const processor = this.addNode(unifiedProcessor);
-    
+
     // Fan-in with stream merging
     this.fanIn([
-      { 
-        source: sourceA.slots.data, 
+      {
+        source: sourceA.slots.data,
         tag: 'webhook',
-        priority: 1 
+        priority: 1
       },
-      { 
-        source: sourceB.slots.data, 
+      {
+        source: sourceB.slots.data,
         tag: 'queue',
-        priority: 2 
+        priority: 2
       },
-      { 
-        source: sourceC.slots.data, 
+      {
+        source: sourceC.slots.data,
         tag: 'file',
-        priority: 3 
+        priority: 3
       }
     ], processor.slots.input, {
       mergeStrategy: 'priority', // or 'round-robin', 'timestamp'
@@ -504,7 +498,7 @@ class StreamPipelineWorkflow {
     const aggregator = this.addNode(windowAggregator);
     const anomalyDetector = this.addNode(anomalyDetector);
     const alerter = this.addNode(alertSystem);
-    
+
     // Pipeline with windowing and complex operations
     this.pipeline([
       {
@@ -558,7 +552,7 @@ class StreamPipelineWorkflow {
 
 ### 4. Real-World E-commerce Order Processing Workflow
 
-```javascript
+````javascript
 class EcommerceOrderWorkflow {
   public build() {
     // Order processing pipeline
@@ -569,7 +563,7 @@ class EcommerceOrderWorkflow {
     const fulfillmentService = this.addNode(fulfillmentService);
     const emailNotifier = this.addNode(emailService);
     const analytics = this.addNode(analyticsService);
-    
+
     // Main order flow
     this.connectReactive(orderReceiver.slots.orders, validator.slots.input, {
       transform: (order) => ({
@@ -580,7 +574,7 @@ class EcommerceOrderWorkflow {
       }),
       rateLimit: { requests: 100, windowMs: 1000 }
     });
-    
+
     // Valid orders go to inventory check
     this.connectReactive(validator.slots.valid, inventoryChecker.slots.check, {
       transform: (order) => ({
@@ -588,7 +582,7 @@ class EcommerceOrderWorkflow {
         status: 'checking_inventory'
       })
     });
-    
+
     // Available inventory goes to payment
     this.connectReactive(inventoryChecker.slots.available, paymentProcessor.slots.process, {
       transform: (order) => ({
@@ -597,7 +591,7 @@ class EcommerceOrderWorkflow {
         inventory_reserved: true
       })
     });
-    
+
     // Successful payments go to fulfillment
     this.connectReactive(paymentProcessor.slots.success, fulfillmentService.slots.fulfill, {
       transform: (order) => ({
@@ -606,7 +600,7 @@ class EcommerceOrderWorkflow {
         payment_confirmed: true
       })
     });
-    
+
     // All status changes trigger notifications
     this.fanOut(fulfillmentService.slots.shipped, [
       {
@@ -632,7 +626,7 @@ class EcommerceOrderWorkflow {
         })
       }
     ]);
-    
+
     // Error handling flows
     this.connectReactive(inventoryChecker.slots.unavailable, emailNotifier.slots.send, {
       transform: (order) => ({
@@ -641,18 +635,18 @@ class EcommerceOrderWorkflow {
         data: { order_id: order.order_id }
       })
     });
-    
+
     this.connectReactive(paymentProcessor.slots.failed, emailNotifier.slots.send, {
       transform: (order) => ({
         to: order.customer.email,
         template: 'payment_failed',
-        data: { 
+        data: {
           order_id: order.order_id,
-          reason: order.payment_failure_reason 
+          reason: order.payment_failure_reason
         }
       })
     });
-    
+
     // Real-time analytics aggregation
     this.aggregateStreams([
       validator.slots.valid,
@@ -678,7 +672,7 @@ class EcommerceOrderWorkflow {
 ```javascript
 // Reactive connection types and configurations
 class ReactiveWorkflowConnections {
-  
+
   // Basic reactive connection
   basicConnect(fromSlot, toSlot) {
     return this.connectReactive(fromSlot, toSlot, {
@@ -687,7 +681,7 @@ class ReactiveWorkflowConnections {
       errorHandling: 'continue'
     });
   }
-  
+
   // Buffered connection with backpressure
   bufferedConnect(fromSlot, toSlot, options = {}) {
     return this.connectReactive(fromSlot, toSlot, {
@@ -702,7 +696,7 @@ class ReactiveWorkflowConnections {
       }
     });
   }
-  
+
   // Windowed connection for time-based aggregation
   windowedConnect(fromSlot, toSlot, windowConfig) {
     return this.connectReactive(fromSlot, toSlot, {
@@ -720,10 +714,10 @@ class ReactiveWorkflowConnections {
       }
     });
   }
-  
+
   // Conditional routing connection
   conditionalConnect(fromSlot, routes) {
-    return routes.map(route => 
+    return routes.map(route =>
       this.connectReactive(fromSlot, route.toSlot, {
         type: 'conditional',
         condition: route.condition,
@@ -732,7 +726,7 @@ class ReactiveWorkflowConnections {
       })
     );
   }
-  
+
   // Load-balanced connection to multiple targets
   loadBalancedConnect(fromSlot, targetSlots, strategy = 'round-robin') {
     return this.connectReactive(fromSlot, targetSlots, {
@@ -759,18 +753,18 @@ class RealTimeAnalyticsWorkflow {
     const webEvents = this.addNode(webEventSource);
     const mobileEvents = this.addNode(mobileEventSource);
     const apiEvents = this.addNode(apiEventSource);
-    
+
     // Processing nodes
     const eventEnricher = this.addNode(eventEnricherNode);
     const sessionizer = this.addNode(sessionizerNode);
     const aggregator = this.addNode(realTimeAggregator);
     const anomalyDetector = this.addNode(anomalyDetectorNode);
-    
+
     // Output nodes
     const dashboard = this.addNode(dashboardUpdater);
     const alerter = this.addNode(alertingSystem);
     const warehouse = this.addNode(dataWarehouse);
-    
+
     // 1. Merge all event sources
     this.fanIn([
       { source: webEvents.slots.events, tag: 'web', priority: 1 },
@@ -781,7 +775,7 @@ class RealTimeAnalyticsWorkflow {
       bufferSize: 1000,
       maxLatency: 1000 // 1 second max latency
     });
-    
+
     // 2. Enrich events with user/session data
     this.connectReactive(eventEnricher.slots.enriched, sessionizer.slots.input, {
       transform: (event) => ({
@@ -795,7 +789,7 @@ class RealTimeAnalyticsWorkflow {
         this.logError('Event enrichment failed', { error, event });
       }
     });
-    
+
     // 3. Sessionize events (sliding window by user)
     this.windowedConnect(sessionizer.slots.sessions, aggregator.slots.input, {
       type: 'session',
@@ -813,7 +807,7 @@ class RealTimeAnalyticsWorkflow {
         user_segment: events[0].user_segment
       })
     });
-    
+
     // 4. Real-time aggregations (tumbling windows)
     this.windowedConnect(aggregator.slots.metrics, dashboard.slots.update, {
       type: 'tumbling',
@@ -829,7 +823,7 @@ class RealTimeAnalyticsWorkflow {
         user_segments: getSegmentBreakdown(sessions)
       })
     });
-    
+
     // 5. Anomaly detection on aggregated metrics
     this.connectReactive(aggregator.slots.metrics, anomalyDetector.slots.input, {
       transform: (metrics) => ({
@@ -841,7 +835,7 @@ class RealTimeAnalyticsWorkflow {
         ]
       })
     });
-    
+
     // 6. Alert on anomalies
     this.connectReactive(anomalyDetector.slots.anomalies, alerter.slots.input, {
       filter: (anomaly) => anomaly.severity > 0.8,
@@ -854,7 +848,7 @@ class RealTimeAnalyticsWorkflow {
         channels: ['slack', 'email', 'pagerduty']
       })
     });
-    
+
     // 7. Data warehouse export (batched)
     this.bufferedConnect(aggregator.slots.metrics, warehouse.slots.input, {
       bufferSize: 100,
@@ -867,7 +861,7 @@ class RealTimeAnalyticsWorkflow {
         data: metricsBatch
       })
     });
-    
+
     // 8. Error handling and monitoring
     this.connectReactive(eventEnricher.slots.errors, alerter.slots.input, {
       transform: (error) => ({
@@ -880,13 +874,13 @@ class RealTimeAnalyticsWorkflow {
       })
     });
   }
-  
+
   public async start() {
     await this.initializeNodes();
     this.startHealthMonitoring();
     console.log('Real-time analytics workflow started');
   }
-  
+
   private startHealthMonitoring() {
     setInterval(() => {
       const health = this.getSystemHealth();
@@ -896,7 +890,7 @@ class RealTimeAnalyticsWorkflow {
     }, 30000); // Check every 30 seconds
   }
 }
-```
+````
 
 ## Frontend Reactive Slot Visualization
 
@@ -905,12 +899,12 @@ class RealTimeAnalyticsWorkflow {
 function renderReactiveWorkflow(workflow) {
   const nodes = workflow.getNodes();
   const connections = workflow.getConnections();
-  
-  nodes.forEach(node => {
+
+  nodes.forEach((node) => {
     const element = createNodeElement(node);
-    
+
     // Render input slots with reactive indicators
-    node.inputSlots.forEach(slot => {
+    node.inputSlots.forEach((slot) => {
       const slotElement = createSlotElement(slot, {
         position: slot.position,
         color: slot.color,
@@ -919,52 +913,52 @@ function renderReactiveWorkflow(workflow) {
         // Show data flow rate if reactive
         dataRate: slot.reactive ? getSlotDataRate(slot) : null,
         // Show buffer status
-        bufferStatus: slot.bufferSize ? getBufferStatus(slot) : null
+        bufferStatus: slot.bufferSize ? getBufferStatus(slot) : null,
       });
-      
+
       element.appendChild(slotElement);
     });
-    
+
     // Render output slots
-    node.outputSlots.forEach(slot => {
+    node.outputSlots.forEach((slot) => {
       const slotElement = createSlotElement(slot, {
         position: slot.position,
-        color: slot.color, 
+        color: slot.color,
         icon: slot.icon,
         reactive: slot.reactive,
         // Show real-time metrics
         emissionRate: slot.reactive ? getEmissionRate(slot) : null,
-        subscriberCount: slot.reactive ? getSubscriberCount(slot) : null
+        subscriberCount: slot.reactive ? getSubscriberCount(slot) : null,
       });
-      
+
       element.appendChild(slotElement);
     });
   });
-  
+
   // Render connections with data flow animation
-  connections.forEach(connection => {
+  connections.forEach((connection) => {
     const connectionElement = createConnectionElement(connection, {
       animated: connection.reactive,
       dataFlow: connection.reactive ? getConnectionDataFlow(connection) : null,
-      health: getConnectionHealth(connection)
+      health: getConnectionHealth(connection),
     });
   });
 }
 
 // Real-time connection monitoring
 function monitorConnections(workflow) {
-  workflow.getConnections().forEach(connection => {
+  workflow.getConnections().forEach((connection) => {
     if (connection.reactive) {
       // Monitor data flow rate
       connection.onDataFlow((data, rate) => {
         updateConnectionVisualization(connection.id, { rate, data });
       });
-      
+
       // Monitor errors
       connection.onError((error) => {
         showConnectionError(connection.id, error);
       });
-      
+
       // Monitor backpressure
       connection.onBackpressure((pressure) => {
         updateConnectionPressure(connection.id, pressure);
@@ -978,9 +972,9 @@ function monitorConnections(workflow) {
 {
   "nodes": [
     {
-      "nodeInfoComponent": { 
+      "nodeInfoComponent": {
         "uuid": "reactive-webhook",
-        "displayName": "Reactive Webhook" 
+        "displayName": "Reactive Webhook"
       },
       "positionComponent": { "x": 50, "y": 100 },
       "slotMetadataComponent": {
@@ -991,7 +985,7 @@ function monitorConnections(workflow) {
             "type": "stream",
             "reactive": true,
             "color": "#2196F3",
-            "icon": "stream", 
+            "icon": "stream",
             "position": "right",
             "realTimeMetrics": {
               "emissionRate": "45/sec",
