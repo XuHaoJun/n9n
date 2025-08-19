@@ -6,26 +6,45 @@ n9n 是一個 n8n 的替代方案，專為開發者設計的工作流自動化�
 
 ### 主要特色
 
+- **三種工作模式**：支援 **No Code 視覺化編輯**、**Code 程式碼開發** 以及 **AI 生成程式碼**，滿足不同使用者需求
 - **程式碼優先**：使用程式碼取代傳統的 JSON 配置，提供更強大的靈活性和可維護性
 - **函數即節點**：每個工作流節點都是一個 JavaScript/TypeScript 函數，易於理解和除錯
 - **ECS 架構**：基於實體組件系統 (Entity Component System) 設計，提供高效能和可擴展性
-- **智能解析**：自動將程式碼解析為 JSON 格式以供視覺化渲染和執行
+- **AI 程式碼生成**：透過 AI 助手自動生成工作流程式碼，加速開發流程
 
-透過 n9n，您可以用熟悉的程式語言建構複雜的自動化工作流，同時享受視覺化編輯器的便利性。
+透過 n9n，您可以選擇最適合的方式建構自動化工作流：
+- 🎨 **No Code**：使用視覺化介面拖拉建立工作流
+- 💻 **Code**：用熟悉的程式語言精確控制每個細節  
+- 🤖 **AI Generated**：讓 AI 助手協助生成和優化程式碼
 
 ---
 
 ## Introduction
 
-n8n alternative.
+n9n is a powerful workflow automation platform that serves as an advanced alternative to n8n, designed specifically for developers who need flexibility and control.
 
-replace json by code.
+### Key Features
 
-function as node.
+- **Three Working Modes**: Supports **No Code visual editing**, **Code development**, and **AI-generated code** to meet different user needs
+- **Code-First Approach**: Replace traditional JSON configurations with actual code for enhanced flexibility and maintainability
+- **Function as Node**: Each workflow node is a JavaScript/TypeScript function, making it easy to understand and debug
+- **ECS Architecture**: Built on Entity Component System design for high performance and scalability
+- **AI Code Generation**: Leverage AI assistants to automatically generate and optimize workflow code
 
-ECS based.
+Choose the approach that fits your workflow:
+- 🎨 **No Code**: Visual drag-and-drop interface for rapid prototyping
+- 💻 **Code**: Full programmatic control with familiar programming languages
+- 🤖 **AI Generated**: AI-assisted code generation and optimization
 
-will parse it to json for render.
+The platform seamlessly converts between code and visual representations, giving you the best of both worlds.
+
+## 📚 Design Documentation
+
+For detailed technical design and architecture:
+
+- **[Code <-> UI Relationship Design](./docs/CODE_UI_RELATIONSHIP.md)** - Complete architecture for bidirectional code/visual synchronization
+- **[UI Component Examples](./docs/UI_COMPONENT_EXAMPLES.md)** - Practical UI component implementations for different editing modes  
+- **[Implementation Example](./docs/IMPLEMENTATION_EXAMPLE.md)** - End-to-end example showing visual to code workflow
 
 ## Reactive Slot Connections - Advanced Workflow Design
 
@@ -248,7 +267,10 @@ function reactiveEmailSender(@InputSlots() inputs, @OutputSlots() outputs) {
 ### 2. Complete Reactive Workflow Building
 
 ```javascript
-class ReactiveEmailWorkflow {
+class ReactiveEmailWorkflow extends WorkflowBase {
+  // will directly run in frontend and backend, 
+  // frontend will get graph(nodes/edges) for render no code editor!
+  // backend will exec it!
   public build() {
     // 1. Create reactive nodes
     const webhook = this.addNode(reactiveWebhook, {
